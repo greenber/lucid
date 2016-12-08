@@ -1,6 +1,7 @@
 var valOfCard1 = "First Card"
 var valOfCard2 = "Second Card"
 var deck = ["Wizards", "Goblins", "Witch", "Cat"]
+var questionDeck = ["Just say yes", "Just say no"]
 
 
 function myFunction() {
@@ -27,3 +28,21 @@ function card(currentVal, elementId, cardNum) {
 	document.getElementById(elementId).innerHTML = replaceString; 
 
 }//Card
+
+function dmFun(){
+
+	var randomElement = parseInt ((Math.random() * 2), 10);
+
+	document.getElementById("dialog").innerHTML = questionDeck[randomElement];
+
+	$( "#dialog" ).dialog({ autoOpen: false });
+	$( "#opener" ).click(function() {
+	  $( "#dialog" ).dialog( "open" );
+	});
+
+}///addAtt
+
+
+
+
+

@@ -1,8 +1,10 @@
-{% load static %} 
+{% load static %}
 {% load bootstrap3 %}
 {% bootstrap_css %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 {% bootstrap_javascript %}
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'lucid/style.css' %}" />
 <script type="text/javascript" src="{% static 'lucid/main.js' %}"></script>
 
@@ -41,11 +43,15 @@
 				</div>
 			</div>
 	</div>
-	
-	<button onclick="myFunction()">Try it</button>
 
-		
+	<button onclick="myFunction()">Deal Cards</button>
+	<button id="opener" onclick="dmFun()">I'm DMing</button>
+	<div id="dialog" title="Question"></div>
+	
+
+
 	</div>
+
 
 		</div>
 	</div>	
@@ -59,11 +65,36 @@
 			</div>
 			<div class="panel-body">
 				{% for points in plotPoints %}
+
+				<form action = "{% url 'delPoint' currentStory.id %}" method="POST">
+				{% csrf_token %}
+				<input type = "radio" id = "plotPoint" name = "plotPoint" value = "{{points.point}}" >
 				{{points.point}}
+				<input type="submit" value="Submit">
+				</form>
+
+				
 				{% endfor %}
+			<form action = "{% url 'vote' currentStory.id %}" method="POST">
+				{% csrf_token %}
+				<input type="text" name="Plot Point" id = "PlotPoint" value="Things">
+				<input type="submit" value="Submit">
+			</form>
 			</div>
+
+		
+
 		</div>
+	
 	</div>
+
+
+<!-- 
+
+<div id="dialog" title="Dialog Title">I'm a dialog</div>
+First name: <input type="text" name="FirstName" value="Mickey"><br>
+--> 
+
 
 
 
@@ -91,13 +122,32 @@
 			</div>
 			<div class="panel-body">
 				{% for att in characters.characteratt_set.all %}
-				{{att.attrib}}
+				<p>{{att.attrib}}</p>
+			
 				{% endfor %}
+			<form action = "{% url 'detail' currentStory.id %}" method="POST">
+			{% csrf_token %}
+			<input type="text" name="charName" id = "charName" value="Things">
+			<input type="hidden" name="charAtt" id = "charAtt" value = "{{ characters.characterName }}">
+			<input type="submit" value="Submit">
+
 			</div>
+			
+		</form>
+
 		</div>
+
 	</div> 
 	{% endfor %}
+	
+	
 
+</div>
+<form action = "{% url 'results' currentStory.id %}" method="POST">
+			{% csrf_token %}
+			<input type="text" name="charName" id = "charName" value="Things">
+			<input type="submit" value="Submit">
+	</form>
 </div>
 
 
